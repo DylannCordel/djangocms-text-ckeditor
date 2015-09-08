@@ -21,7 +21,11 @@ $(document).ready(function () {
 				$(this).hide();
 
 				var container = $(this).attr('id');
-				CMS.CKEditor.init(container, {{ settings|safe }}, {
++				var settings = {{ settings|safe }};
++				{% if placeholder %}
++					settings.bodyClass = 'cms_ph_{{ placeholder.slot }}' ;
++				{% endif %}
++				CMS.CKEditor.init(container, settings, {
 					'static_url': '{{ STATIC_URL }}djangocms_text_ckeditor',
 					'add_plugin_url': '{% cms_admin_url "add-sub-plugin-to-text-plugin" %}',
 					'placeholder_id': {{ placeholder.pk|default:"''"|unlocalize }},
